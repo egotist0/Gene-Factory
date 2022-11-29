@@ -29,9 +29,9 @@ Can be devided into 3 different components
 
 In bioinformatics, we want to find some similarity relationship between two sequences, and this algorithm to find the similarity relationship of biological sequences is the double sequence comparison algorithm . The similarity between two sequences is usually determined by using the difference of characters between the two sequences. If the characters at the corresponding positions in the two sequences are different, then the similarity of the sequences is low, and vice versa, the similarity of the sequences is high.
 
-- Biobase sequences consist of ATCG, a scoring rule needs to be set for comparison, I set `match=5,dismatch=-4,gap=-2.5` here, if the user needs to modify the rule, the location of the modified rule is in lines 26-28 of `data_analysis.py` file and lines 16-18 of `dp.py` file. Lines 16-18 of the `dp.py` file. ![](file:///home/egotist/PycharmProjects/dp_program/photo/1.jpg)
+- Biobase sequences consist of ATCG, a scoring rule needs to be set for comparison, I set `match=5,dismatch=-4,gap=-2.5` here, if the user needs to modify the rule, the location of the modified rule is in lines 26-28 of `data_analysis.py` file and lines 16-18 of `dp.py` file. Lines 16-18 of the `dp.py` file. ![](https://github.com/egotist0/Gene_factory/tree/master/photo/1.jpg)
 
-![](file:///home/egotist/PycharmProjects/dp_program/photo/2.jpg)
+![](https://github.com/egotist0/Gene_factory/tree/master/photo/2.jpg)
 
 
 
@@ -79,9 +79,9 @@ In bioinformatics, we want to find some similarity relationship between two sequ
 
 Run `smallprogram.py` file, first open `On`, then input two sequences, click the button above to output the highest score and the best match
 
-![](file:///home/egotist/PycharmProjects/dp_program/photo/%E5%88%9D%E5%A7%8B.jpg)
+![](https://github.com/egotist0/Gene_factory/tree/master/photo/photo/%E5%88%9D%E5%A7%8B.jpg)
 
-![](file:///home/egotist/PycharmProjects/dp_program/photo/3.png)
+![](https://github.com/egotist0/Gene_factory/tree/master/photo/3.png)
 
 **Since this is an excellent text string matching algorithm, it can be used not only for base sequence matching, but similar text matching, similarity matching, text checking, protein sequence matching can be performed as well**
 
@@ -115,9 +115,9 @@ Since a review of the literature shows that the AT to CG ratio of chromosome 1 i
 
 Run the `smallprogram.py` file, first open `On`, then enter the required length and number, click the button above to output the first sequence that meets the requirement, then you can find all other sequences that meet the requirement in the `seqs.txt` file in the folder
 
-![](file:///home/egotist/PycharmProjects/dp_program/photo/4.jpg)
+![](https://github.com/egotist0/Gene_factory/tree/master/photo/4.jpg)
 
-![](file:///home/egotist/PycharmProjects/dp_program/photo/5.jpg)
+![](https://github.com/egotist0/Gene_factory/tree/master/photo/5.jpg)
 
 **If you want to generate a sequence with a specific ratio just modify the AT to CG ratio of the `pairwise` string in the original file**
 
@@ -141,13 +141,13 @@ The specific implementation functions are similar to the sequence matching, exce
 
 Run the `smallprogram.py` file, first open `On`, then click the top middle button to output the k-s test results, then you can view the detailed results in the folder `seq.txt,score.txt,outcome.txt,outcome.png`
 
-![](file:///home/egotist/PycharmProjects/dp_program/photo/6.jpg)
+![](https://github.com/egotist0/Gene_factory/tree/master/photo/6.jpg)
 
-![](file:///home/egotist/PycharmProjects/dp_program/photo/9.jpg)
+![](https://github.com/egotist0/Gene_factory/tree/master/photo/9.jpg)
 
-![](file:///home/egotist/PycharmProjects/dp_program/photo/10.jpg)
+![](https://github.com/egotist0/Gene_factory/tree/master/photo/10.jpg)
 
-![](/home/egotist/PycharmProjects/dp_program/photo/7.jpg)
+![](https://github.com/egotist0/Gene_factory/tree/master/photo/7.jpg)
 
 
 
