@@ -1,65 +1,66 @@
-# python大作业：Gene comparison
+# Gene comparison
 
-姜戈519111910306
-
-生物信息与统计学系
+Egotist
 
 
 
-## 一.课题灵感
-
-这个项目的灵感来自于本学期的一门专业课计算编程语言，老师在讲动态规划算法时提出的可以用于序列比对算出最优得分，这就引出了一个问题：序列比对
-
-序列比对：是为确定两个或多个序列之间的相似性以至于同源性，而将它们按照一定的规律排列。将两个或多个序列排列在一起，标明其相似之处。序列中可以插入间隔（通常用短横线“-”表示）。
-
-这一方法常用于研究由共同祖先进化而来的序列，特别是如蛋白质序列或DNA序列等生物序列。在比对中，错配与突变相应，而空位与插入或缺失对应。序列比对还可用于语言进化或文本间相似性之类的研究。
-
-基于这个问题，我采用了Needleman/Wunsch算法（一个专用于文本比对的算法），来解决序列比对的评分问题和最佳回溯结果，然后衍生出了一些小功能，比如随机序列生成和数据分析等，从使用方便性考虑我用tinker包设计了一个可视化的小程序，整个程序是在python3.8的anaconda3环境下进行的
 
 
+## I. Inspiration for the project
 
-## 二.主要功能及简要介绍
+The inspiration for this project came from a semester-long course on *computational programming languages*, where the instructor was talking about dynamic programming algorithms that can be used for sequence matching to calculate the optimal score, which led to the question: **sequence matching**
 
-大致可以分成3个
+> Sequence matching: is to determine the similarity or even homology between two or more sequences, and arrange them according to a certain law. Two or more sequences are aligned together and their similarities are marked. Spacers (usually indicated by a short horizontal line "-") can be inserted in the sequences.
 
-### 1.序列比对与最佳回溯结果
+This method is often used to study sequences that evolved from a common ancestor, especially biological sequences such as protein sequences or DNA sequences. In alignment, mismatches correspond to mutations, while null positions correspond to insertions or deletions. Sequence alignment can also be used for studies such as language evolution or inter-textual similarity.
 
-#### 思路
+Based on this problem, I adopted the Needleman/Wunsch algorithm (an algorithm dedicated to text matching) to solve the scoring problem of sequence matching and the best backtracking results, and then derived some small functions, such as random sequence generation and data analysis, etc. For ease of use consideration I designed a visual applet using the tinker package, and the whole program is in The whole program is carried out in anaconda3 environment of python3.8
 
-在生物信息处理中，我们希望找出两条序列之间具有的某种相似性关系，这种寻找生物序列相似性关系的算法就是双序列比对算法 。通常利用两个序列之间的字符差异来测定序列之间的相似性，两条序列中相应位置的字符如果差异大，那么序列的相似性低，反之，序列的相似性就高。
 
-- 生物碱基序列由ATCG组成，进行比对时需要设定一个评分的规则，我这里设定的是`match=5,dismatch=-4,gap=-2.5`,如果使用者需要可以自己修改规则，修改规则的位置在`data_analysis.py`文件的26-28行和`dp.py`文件的16-18行：![](file:///home/egotist/PycharmProjects/dp_program/photo/1.jpg)
+
+
+## II. Main functions and brief introduction
+
+Can be devided into 3 different components
+
+### 1.Sequence matching and best traceback results
+
+#### Ideas
+
+In bioinformatics, we want to find some similarity relationship between two sequences, and this algorithm to find the similarity relationship of biological sequences is the double sequence comparison algorithm . The similarity between two sequences is usually determined by using the difference of characters between the two sequences. If the characters at the corresponding positions in the two sequences are different, then the similarity of the sequences is low, and vice versa, the similarity of the sequences is high.
+
+- Biobase sequences consist of ATCG, a scoring rule needs to be set for comparison, I set `match=5,dismatch=-4,gap=-2.5` here, if the user needs to modify the rule, the location of the modified rule is in lines 26-28 of `data_analysis.py` file and lines 16-18 of `dp.py` file. Lines 16-18 of the `dp.py` file. ![](file:///home/egotist/PycharmProjects/dp_program/photo/1.jpg)
 
 ![](file:///home/egotist/PycharmProjects/dp_program/photo/2.jpg)
 
-具体的算法实现思路是动态规划
 
-#### 评分函数
 
-+ `gap`表示缺失得分为2.5，`m`表示匹配得分为5，`mm`表示非匹配得分设为-4；
+#### Scoring Functions
 
-+ 初始化数组，对于第0层，第0列赋值为`i*gap`;
++ `gap` indicates a missing score of 2.5, `m` indicates a matching score of 5, and `mm` indicates a non-matching score set to -4.
 
-+ 下面的双层`for`循环是对二维数组的每个位置算`score`值：
++ Initialize the array, and for level 0, assign column 0 to the value `i*gap`;
 
-  1. 总体每个位点的得分为：
++ The following two-layer `for` loop counts the `score` value for each position of the two-dimensional array.
 
-     **三个方向的得分=该方向上一位点得分+移动过程得分**
+  1. the overall per-site score is.
 
-     最后选取三个方向最高得分作为该位点的得分，以此循环从上到下，从左到右得到整个矩阵的得分。
+     **score for all three directions = score of the previous locus in that direction + score of the move**
 
-  2. 然后经过上一步就知道**最右下角的得分肯定是最优得分，因为它是从每种子情况的最优得分得到的。**
+     Finally, the highest score of the three directions is selected as the score of the bit, and the score of the whole matrix is obtained from top to bottom and from left to right in this cycle. 2.
 
-  3. 具体的操作就是
+  2. Then, after the previous step, we know that the score in the bottom right corner of ** must be the optimal score, because it is obtained from the optimal score of each seed case. **.
 
-     1. 如果`str1[i - 1] = str2[j - 1]`,那么`score[i，j]`直接等于`score[i-1，j-1]+m`
-     2. 如果`str1[i - 1] != str2[j - 1]`,那么`score[i，j]`直接等于`score[i-1，j-1]+mm`
-     3. 先进行上面两步，然后左上角`score[i，j-1]`与右上角`score[i-1，j]`比较取出较大值，然后得出来的较大值加上`gap`,如果此时`score[i，j]`小于这个新的得到的分数，那么更新`score[i，j]`,否则则不更新；
-     4. 最后的结果就是选取三个方向最高得分作为该位点的得分；
+  3. The specific operation is
 
-+ 完整的分数表格形成后最右下角的得分必然就是最佳匹配得分，写入`SCORE`文件即可；同时返回给小程序
+     1. if `str1[i - 1] = str2[j - 1]`, then `score[i, j]` is directly equal to `score[i-1, j-1]+m`
+     2. if `str1[i - 1] ! = str2[j - 1]`, then `score[i, j]` is directly equal to `score[i-1, j-1]+mm`
+     3. first carry out the above two steps, then the upper left corner `score[i, j-1]` is compared with the upper right corner `score[i-1, j]` to take out the larger value, then the larger value obtained is added to `gap`, if at this point `score[i, j]` is less than this new obtained score, then update `score[i, j]`, otherwise it is not updated.
+     4. the final result is the selection of the highest score in the three directions as the score for that locus.
 
-+ 但是我们还需要知道它是从哪一条路径得到的这个最优得分。因此需要回溯，这里就调用了`printAlign`函数
++ The score in the bottom right corner after the complete score table is formed is necessarily the best match score, which is written to the `SCORE` file; it is also returned to the applet
+
++ But we also need to know from which path it got this best score. So we need to backtrack, and here we call the `printAlign` function
 
 #### 回溯函数
 
