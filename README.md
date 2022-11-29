@@ -62,42 +62,42 @@ In bioinformatics, we want to find some similarity relationship between two sequ
 
 + But we also need to know from which path it got this best score. So we need to backtrack, and here we call the `printAlign` function
 
-#### 回溯函数
+#### backtracking function
 
-+ 回溯的方式就是看每个回溯位点的左上方，上方和左方最大值位置，最后就可以得到整个回溯路径；
++ the way backtracking works is to look at the top left, top and left maximum positions of each backtracking locus, and finally the entire backtracking path is obtained.
 
-+ `printAlign`函数输入的参数比较多，`score`是输入的二维评分数组，`i`和`j`表示的是此时回溯到的评分数组的位置，初始位置就是从(len1,len2)开始，`s1`和`s2`是进行的回溯的两条序列，`saln`和`raln`存储的是最后输出的最佳匹配结果
++ The `printAlign` function has more parameters, `score` is the input two-dimensional scoring array, `i` and `j` represent the position of the scoring array backtracked at this time, the initial position is from (len1,len2), `s1` and `s2` are the two sequences of backtracking, `saln` and `raln` store the final output Best match result
 
-+ 三个`if`判断是是判断左上，左，上哪个得分最高，最高的就是最优的匹配路径：
++ The three `if` judgments are to determine which score is highest on the top left, left, or top, and the highest is the optimal matching path: 1.
 
-  1. 从右下方开始，如果最大值出现在上面，则横向这条序列引入一个GAP ("-")，纵向这条序列取该处碱基；
-  2. 如果最大值出现在左边，则纵向这条序列引入一个GAP ("-")，横向这条序列取该处碱基; 
-  3. 如果最大值出现在左上角，则不引入GAP，纵向和横向均取该处碱基。
-  4. 当然这个回溯的路径不一定唯一，当三个位置有两个相同的时候，两个路径都是可行的,但为了小程序输出方便，我用了`if...elif`这样就只会筛出一个序列输出
+  1. starting from the bottom right, if the maximum value appears on top, a GAP ("-") is introduced for this sequence horizontally, and the bases are taken there for this sequence vertically.
+  2. if the maximum value appears on the left, introduce a GAP ("-") into this sequence vertically and take the base there for this sequence horizontally; 
+  3. if the maximum value appears in the upper left corner, no GAP is introduced, and the bases are taken both vertically and horizontally.
+  4. Of course, the path of this backtracking is not necessarily unique, when two of the three positions are the same, both paths are feasible, but for the convenience of the output of the applet, I use `if..... .elif` so that only one sequence will be sifted out
 
-#### 使用手册
+#### manual
 
-运行`smallprogram.py`文件，首先打开`On`，然后输入两条序列，点击上方按钮即可输出最高得分和最佳匹配方式
+Run `smallprogram.py` file, first open `On`, then input two sequences, click the button above to output the highest score and the best match
 
 ![](file:///home/egotist/PycharmProjects/dp_program/photo/%E5%88%9D%E5%A7%8B.jpg)
 
 ![](file:///home/egotist/PycharmProjects/dp_program/photo/3.png)
 
-**由于这是一个优秀的文本字符串比对算法，因此不仅可以用来比对碱基序列，类似的文本比对，相似度比对，文字查重，蛋白质序列比对都可以同样进行**
+**Since this is an excellent text string matching algorithm, it can be used not only for base sequence matching, but similar text matching, similarity matching, text checking, protein sequence matching can be performed as well**
 
 
 
-### 2.生成比例为人类染色体的随机序列
+### 2. Generate random sequences scaled to human chromosomes
 
-#### 思路
+#### Idea
 
-人类1号染色体拥有2.3亿个碱基序列，人的很多模拟实验都要用到这些序列来研究特定排序的表达效果和功能，这时候不一定要从NCBI数据库下载真实的数据而只需要类似比例的序列进行模拟处理即可；
+(a) Human chromosome 1 has 230 million base sequences, which are used in many human simulation experiments to study the expression effects and functions of specific sequences, when it is not necessary to download real data from the NCBI database but only a similar proportion of sequences for simulation.
 
-所以我就想到了这样一个小功能来帮助研究人员生成特定长度的特定数量的符合人类染色体一行碱基比例的DNA序列
+So I came up with this little function to help researchers generate a specific number of DNA sequences of a specific length that match the ratio of bases in a row of human chromosomes
 
-#### getseqs函数
+#### getseqs function
 
-函数具体的实现思路很简单
+The exact implementation of the function is simple
 
 ```python
 from random import *
@@ -109,37 +109,37 @@ def getseq(num):
     return seq
 ```
 
-因为查阅文献可以知道，一号染色体的AT与CG比例为3：2，所以我静态定义了一个字符串`pairwise`，其中的AT与CG比例正好符合要求，然后用生成随机数的方式从这个字符串里取出元素整合到新生成的序列中，然后执行这个函数规定次数，将所有生成的序列按行写入一个文件`seqs.txt`中
+Since a review of the literature shows that the AT to CG ratio of chromosome 1 is 3:2, I statically define a string `pairwise` in which the AT to CG ratio is exactly as required, and then use the generation of random numbers to integrate the elements from this string into the newly generated sequence, and then execute this function a prescribed number of times to write all the generated sequences by line to a file `seqs.txt`.
 
-#### 使用手册
+#### User Manual
 
-运行`smallprogram.py`文件，首先打开`On`，然后输入要求的长度和数量，点击上方按钮即可输出第一条符合要求的序列，然后在文件夹中的`seqs.txt`文件中即可找到其他所有满足该要求的序列
+Run the `smallprogram.py` file, first open `On`, then enter the required length and number, click the button above to output the first sequence that meets the requirement, then you can find all other sequences that meet the requirement in the `seqs.txt` file in the folder
 
 ![](file:///home/egotist/PycharmProjects/dp_program/photo/4.jpg)
 
 ![](file:///home/egotist/PycharmProjects/dp_program/photo/5.jpg)
 
-**如果想要生成特定比例的序列只需修改原文件中的`pairwise`字符串的AT与CG比例即可**
+**If you want to generate a sequence with a specific ratio just modify the AT to CG ratio of the `pairwise` string in the original file**
 
-### 3.验证score服从的分布以及数据特征
+### 3. Verify the distribution of score obedience and the data characteristics
 
-#### 思路
+#### Ideas
 
-这个是专业课的一个作业题，生成50条比例符合人类染色体1号序列的序列，然后任一两条之间进行比对生成score文件存储最终得分和seq文件存放最佳比对结果。
+This is a homework problem in a professional course. Generate 50 sequences that match the human chromosome 1 sequence in proportion, and then compare between any two of them to generate a score file to store the final score and a seq file to store the best comparison results.
 
-然后对于score文件绘制直方图判断其是否服从高斯分布，并计算score的平均值，标准差和进行k-s检验的结果
-
-
-
-#### 具体实现
-
-具体的实现函数和序列比对类似，只是多了`loadDta`函数读取`score.txt`文件并进行数据处理，`draw_hist`函数绘制直方图并存为`outcome.png`,然后将数据处理的结果全部输出到`outcome.txt`文件，并输出k-s检验的结果到软件中
+Then the histogram is plotted for the score file to determine whether it follows a Gaussian distribution, and the mean, standard deviation and k-s test results of the score are calculated.
 
 
 
-#### 使用手册
+#### Concrete implementation
 
-运行`smallprogram.py`文件，首先打开`On`，然后点击中间上方按钮即可输出k-s检验结果，然后在文件夹中的`seq.txt,score.txt,outcome.txt,outcome.png`中可以查看详细结果
+The specific implementation functions are similar to the sequence matching, except that the `loadDta` function reads the `score.txt` file and processes the data, the `draw_hist` function draws the histogram and saves it as `outcome.png`, then outputs all the results of data processing to the `outcome.txt` file, and outputs the results of the k-s test to the software
+
+
+
+#### User Manual
+
+Run the `smallprogram.py` file, first open `On`, then click the top middle button to output the k-s test results, then you can view the detailed results in the folder `seq.txt,score.txt,outcome.txt,outcome.png`
 
 ![](file:///home/egotist/PycharmProjects/dp_program/photo/6.jpg)
 
@@ -153,10 +153,10 @@ def getseq(num):
 
 
 
-## 三.总结
+## III. Summary
 
-实现的几个小功能其实都还比较简单，写起来没有啥问题.GUI编程对于所使用的包还不太熟悉，数据分析这一块还可以做很多东西，后续会逐渐补齐这一部分功能。
+The GUI programming is not too familiar with the package used, and there is still a lot that can be done for data analysis, so I will gradually make up for this part of the functionality.
 
-`tinker`包做这种可视化界面感觉终究是有一些麻烦的，并且美观性和功能性还有所欠缺，后续我会用`django`做一个网页的实现，然后加入更多使用的功能逐步完善这个小程序。
+I will use `tinker` package to do this kind of visualization interface feel that there is some trouble after all, and the beauty and functionality is still lacking, I will use `django` to do a web page implementation, and then add more features to gradually improve this small program.
 
-代码文件已上传至作者的github（egotist0），可以在里面获得实现文件，如果感兴趣或想提出一些建议的话,可以给本人的 Github 留言或直接参与修改
+The code file has been uploaded to the author's github (egotist0), you can get the implementation file inside, if you are interested or want to make some suggestions, you can leave a message to my Github or directly participate in the modification
